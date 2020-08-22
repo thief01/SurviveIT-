@@ -5,6 +5,7 @@ using UnityEngine;
 public class Archer : CharacterClass
 {
     public GameObject arrow;
+    public GameObject bigFakenArrow;
     public Transform arrowRespawnPoint;
 
     #region Dash
@@ -42,6 +43,15 @@ public class Archer : CharacterClass
                 // animate basic attack and do damage on target
                 break;
             case 1:
+                Vector3 offset = (rh.point - this.transform.position).normalized;
+                this.transform.rotation = Quaternion.LookRotation(offset, Vector3.up);
+
+                HitInfo hi = new HitInfo(300, 300, this);
+                GameObject g = Instantiate(bigFakenArrow);
+                g.transform.rotation = this.transform.rotation * Quaternion.Euler(Vector3.up*90);
+                g.GetComponent<StrongArrow>().hitInfo = hi;
+                //g.GetComponent<StrongArrow>().setRotation(rh.point);
+                g.transform.position = arrowRespawnPoint.position;
                 activeDash(rh.point);
                 break;
             case 2:

@@ -12463,6 +12463,8 @@ MonoBehaviour:
   mainWeapon: {fileID: 0}
   subWeapon: {fileID: 0}
   arrow: {fileID: 2100804194585278714, guid: 492945ecee46aa54788e927760896c35, type: 3}
+  bigFakenArrow: {fileID: 40838588194906954, guid: e3430ad37905d224085cde636be05687,
+    type: 3}
   arrowRespawnPoint: {fileID: 656149728}
 --- !u!114 &1922865224
 MonoBehaviour:
@@ -14304,3 +14306,72 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!1001 &40838588534524726
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 40838588194881386, guid: e3430ad37905d224085cde636be05687,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.073
+      objectReference: {fileID: 0}
+    - target: {fileID: 40838588194881386, guid: e3430ad37905d224085cde636be05687,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.395
+      objectReference: {fileID: 0}
+    - target: {fileID: 40838588194881386, guid: e3430ad37905d224085cde636be05687,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 34.913
+      objectReference: {fileID: 0}
+    - target: {fileID: 40838588194881386, guid: e3430ad37905d224085cde636be05687,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 40838588194881386, guid: e3430ad37905d224085cde636be05687,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 2.7021175e-15
+      objectReference: {fileID: 0}
+    - target: {fileID: 40838588194881386, guid: e3430ad37905d224085cde636be05687,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.00000006181724
+      objectReference: {fileID: 0}
+    - target: {fileID: 40838588194881386, guid: e3430ad37905d224085cde636be05687,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 40838588194881386, guid: e3430ad37905d224085cde636be05687,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 40838588194881386, guid: e3430ad37905d224085cde636be05687,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 40838588194881386, guid: e3430ad37905d224085cde636be05687,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 40838588194881386, guid: e3430ad37905d224085cde636be05687,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 40838588194906954, guid: e3430ad37905d224085cde636be05687,
+        type: 3}
+      propertyPath: m_Name
+      value: ArcherDashShot
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e3430ad37905d224085cde636be05687, type: 3}
