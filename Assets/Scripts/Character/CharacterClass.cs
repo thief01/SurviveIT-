@@ -44,9 +44,6 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
 
     protected float attackTime=0;
 
-    public TextMeshPro levelOverCharacter;
-    public Transform hpBarOverCharacter;
-
     public string className="Noob!";
 
     public Stats stats;
@@ -56,19 +53,23 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
     public float needExperience;
     public int level;
 
-    public GameObject mainWeapon;
-    public GameObject subWeapon;
+    public GameObject mainWeapon; // control prefab weapon
+    public GameObject subWeapon; // control prefab weapon
 
     protected CharacterClass target;
 
+    private CharacterController myCHC;
+
+    void Start()
+    {
+        myCHC = GetComponent<CharacterController>();
+    }
+
     void Update()
     {
-        levelOverCharacter.text = level.ToString();
-        hpBarOverCharacter.localScale = new Vector3(stats.healthPoints / stats.healthPointsMAX * 8.8074f, 1, 1);
+        GetHeal(stats.healthRegen * Time.deltaTime); // maybe should be every second
 
-        GetHeal(stats.healthRegen * Time.deltaTime);
-
-        if(target !=null && Vector3.Distance(transform.position, target.GetComponent<Transform>().position) < stats.attackRange)
+        if(target !=null && Vector3.Distance(transform.position, target.GetComponent<Transform>().position) < stats.attackRange) // leave it for now
         {
             if (target.life)
                 tryAttack();
@@ -78,43 +79,33 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
             Vector3 offset = (target.transform.position - this.transform.position).normalized;
             Quaternion q = Quaternion.LookRotation(offset, Vector3.up);
             this.transform.rotation = q;
-        }
+        } // ^
+
+        // look whether new level is avaiable
     }
 
-    public void addExp(int exp)
+    public void addExp(float exp) // don't check lvl
     {
         experience += exp;
-        if(needExperience < experience)
-        {
-            experience -= needExperience;
-            level++;
-            stats += scalingPerLevelStats;
-        }
     }
-    public virtual void skillAttack(int i, RaycastHit rh)
+    public virtual void skillAttack(int i, RaycastHit rh) // delete raycasthit
     {
         Debug.LogWarning("Noob hasn't skills... Learn it!");
     }
 
-    public virtual float getCooldown(int i)
+    public virtual float getCooldown(int i) // for UI? should be in UI
     {
         Debug.LogWarning("Noob hasn't skills.. He is just a noob");
         return 0f;
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected() // draw a attack range
     {
         Gizmos.color = new Color(255, 0, 0);
         Gizmos.DrawWireSphere(this.transform.position+Vector3.up*0.5f, stats.attackRange);
     }
 
-    protected void updateTopValues()
-    {
-        levelOverCharacter.text = level.ToString();
-        hpBarOverCharacter.localScale = new Vector3(stats.healthPoints / stats.healthPointsMAX * 8.8074f, 1, 1);
-    }
-
-    public virtual bool tryAttack()
+    public virtual bool tryAttack() // do something with this
     {
         IDamageable target = this.target.GetComponent<IDamageable>();
         HitInfo i = new HitInfo();
@@ -127,12 +118,12 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
         return true;
     }
 
-    void showDamage(float dmg)
+    void showDamage(float dmg) // make log with delegate
     {
-        Debug.Log("Damage "+ dmg);
+        // Debug.Log("Damage "+ dmg); should be list but later xD maybe use delegate?
     }
 
-    public void GetDamage(HitInfo hi)
+    public void GetDamage(HitInfo hi) // 
     {
         if (life)
         {
@@ -146,7 +137,7 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
         }
     }
 
-    virtual protected float calculateRealDamage(HitInfo hi)
+    virtual protected float calculateRealDamage(HitInfo hi) // 
     {
         float damage;
 
@@ -169,7 +160,7 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
             stats.healthPoints = stats.healthPointsMAX;
     }
 
-    public bool Kill()
+    public bool Kill() // maybe delete this func
     {
         if (stats.healthPoints > 0)
             return false;
@@ -180,24 +171,15 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
         return true;
     }
 
-    public void everyOneSecond()
+    public void setTarget(Transform t) // kk
     {
-        
-    }
-
-    public void addExp(float exp)
-    {
-
-    }
-
-    public void setTarget(Transform t)
-    {
-        GetComponent<CharacterController>().setTarget(t, stats.attackRange);
+        myCHC.setTarget(t, stats.attackRange);
         target = t.GetComponent<CharacterClass>();
     }
 
     public void removeTarget()
     {
         target = null;
+        myCHC.removeTarget();
     }
 }
