@@ -8,11 +8,6 @@ public class HitInfo
     public float adDamage;
     public CharacterClass owner;
 
-    public HitInfo()
-    {
-
-    }
-
     public HitInfo(float ad, float ap, CharacterClass own)
     {
         apDamage = ap;

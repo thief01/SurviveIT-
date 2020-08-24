@@ -26,15 +26,15 @@ public class PlayerInput : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            characterClass.skillAttack(0,rh);
+            characterClass.skillAttack(0);
         }
         if(Input.GetKeyDown(KeyCode.W))
         {
-            characterClass.skillAttack(1,rh);
+            //characterClass.skillAttack(1,rh);
         }
         if(Input.GetKeyDown(KeyCode.E))
         {
-            characterClass.skillAttack(2,rh);
+            //characterClass.skillAttack(2,rh);
         }
 
         if(Input.GetMouseButtonDown(0))

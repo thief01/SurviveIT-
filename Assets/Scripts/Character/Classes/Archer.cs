@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dash : MonoBehaviour
+public class Archer : CharacterClass
 {
     // Start is called before the first frame update
     void Start()
@@ -15,4 +15,5 @@ public class Dash : MonoBehaviour
     {
         
     }
+
 }
