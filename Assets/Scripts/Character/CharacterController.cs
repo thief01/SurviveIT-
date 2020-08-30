@@ -33,6 +33,7 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (nma.velocity != Vector3.zero)
         {
             anim.speed = 1f;

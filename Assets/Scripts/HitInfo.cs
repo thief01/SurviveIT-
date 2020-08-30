@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class HitInfo
 {
-    public float apDamage;
-    public float adDamage;
+    public float damage;
+    public DamageType damageType;
     public CharacterClass owner;
 
-    public HitInfo(float ad, float ap, CharacterClass own)
+    public HitInfo(float dmg,DamageType dmgT, CharacterClass own)
     {
-        apDamage = ap;
-        adDamage = ad;
+        damage = dmg;
+        damageType = dmgT;
         owner = own;
     }
 }

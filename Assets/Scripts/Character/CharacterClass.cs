@@ -39,7 +39,7 @@ public class Stats
 public class CharacterClass : MonoBehaviour, IDamageable, IKillable
 {
     public delegate void DamageChange(float value);
-    DamageChange dmg;
+    public DamageChange dmg;
 
     [HideInInspector] public bool life=true;
 
@@ -58,7 +58,15 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
 
     private CharacterController myCHC;
 
-    public SkillParent s;
+    /* attacks list
+     * 0 - basic hit
+     * 1 - some boost
+     * 2 - dash
+     * 3 - some skill
+     * 4 - ulti
+     */
+
+    public SkillParent[] attacks = new SkillParent[5];
 
     // effect list?
 
@@ -67,11 +75,14 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
     void Start()
     {
         myCHC = GetComponent<CharacterController>();
+        lvlLook = GetComponentInChildren<LevelLookAtCamera>();
     }
     #region virtuals
+
+    public LevelLookAtCamera lvlLook;
     void Update()
     {
-        
+
         GetHeal(stats.healthRegen * Time.deltaTime); // maybe should be every second
 
         if(target !=null && Vector3.Distance(transform.position, target.GetComponent<Transform>().position) < stats.attackRange) // leave it for now
@@ -85,17 +96,19 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
             {
                 Vector3 offset = (target.transform.position - this.transform.position).normalized;
                 Quaternion q = Quaternion.LookRotation(offset, Vector3.up);
+                q = Quaternion.Slerp(this.transform.rotation, q, 0.3f);
                 this.transform.rotation = q;
+                
             }
         }
 
+        lvlLook.lookAt();
         callInUpdate();
     }
 
-    public virtual void skillAttack(int i) // delete raycasthit
+    public virtual void attack(int i) // delete raycasthit
     {
-        s.use();
-        Debug.LogWarning("Noob hasn't skills... Learn it!");
+        attacks[i].use();
     }
 
     public virtual void GetDamage(HitInfo hi) // looks ugly XD
@@ -114,18 +127,8 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
 
     protected virtual float calculateRealDamage(HitInfo hi) // same like higher
     {
-        float damage;
 
-        float ap = hi.apDamage-stats.magicResist;
-        float ad = hi.adDamage-stats.physicsResist;
-
-        if (ap < 0)
-            ap = 0;
-        if (ad < 0)
-            ad = 0;
-
-        damage = ap + ad;
-        return damage;
+        return 0f;
     }
 
     public virtual void GetHeal(float i)

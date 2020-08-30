@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class ArrowJump : SkillParent
@@ -10,15 +11,12 @@ public class ArrowJump : SkillParent
     public GameObject arrow;
 
     CharacterController chc;
-    CharacterClass cc;
     void Update()
     {
-        cc = GetComponent<CharacterClass>();
-        chc = GetComponent<CharacterController>();
-
         if(dashIsActive && actualyDashDistance < maxDashRange)
         {
-            chc.nma.Move(direction * dashSpeed * Time.deltaTime);
+            controllerOwner.nma.Move(direction * dashSpeed * Time.deltaTime);
+            controllerOwner.setDestination(this.transform.position);
             actualyDashDistance += Vector3.Distance(Vector3.zero, direction)*dashSpeed*Time.deltaTime;
         }
         if(dashIsActive == true && actualyDashDistance > maxDashRange)
@@ -27,6 +25,8 @@ public class ArrowJump : SkillParent
         }
         if(cooldown>-1)
             cooldown -= Time.deltaTime;
+
+        skillOwner.lvlLook.lookAt();
     }
 
     bool dashIsActive=false;
@@ -55,6 +55,7 @@ public class ArrowJump : SkillParent
             Debug.Log("Bad ray");
             return;
         }
+        calculateDamage();
         cooldown = cooldownTime;
         direction = (rh.point - this.transform.position).normalized;
         this.transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
@@ -70,7 +71,17 @@ public class ArrowJump : SkillParent
 
         // chc.playAnimation(dash);
         // respawn arrow
-        // set direction arrow/dash
         throw new System.NotImplementedException();*/
+        controllerOwner.removeTarget();
+    }
+
+    /*float calculateDamage()
+    {
+        return 0f;
+    }*/
+
+    private void OnDrawGizmosSelected()
+    {
+        
     }
 }

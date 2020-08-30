@@ -20,6 +20,8 @@ public struct BarSlot
 
 public class UIController : MonoBehaviour
 {
+    public GameObject skillDescrption;
+
     public SimpleSlot[] skillSlots = new SimpleSlot[4];
     public BarSlot[] barSlots = new BarSlot[3];
 
@@ -29,13 +31,10 @@ public class UIController : MonoBehaviour
     {
         if(mainCharacter==null)
             Debug.LogError("Main character isn't definied. It may make problems..");
-
-        for (int i = 0; i < 4; i++)
+        for(int i=0; i<4; i++)
         {
-            skillSlots[i].skillIcon = null; // no icon i'm not f***ing graphic
+            skillSlots[i].skillIcon.sprite = mainCharacter.attacks[i + 1].icon;
         }
-
-
     }
 
     public void Update()
@@ -49,9 +48,22 @@ public class UIController : MonoBehaviour
         barSlots[1].value.text = mainCharacter.stats.manaPoints + " / " + mainCharacter.stats.manaPointsMAX;
         barSlots[2].value.text = (mainCharacter.experience / mainCharacter.needExperience * 100f).ToString() + " %";
 
+        
+
         for(int i=0; i<4; i++) // too lazly :O
         {
-            //skillSlots[i].skillColldown.fillAmount = mainCharacter.getCooldown(i);
+            skillSlots[i].skillColldown.fillAmount = mainCharacter.attacks[i + 1].cooldown / mainCharacter.attacks[i + 1].cooldownTime;
         }
+    }
+
+    public void setActiveSkillDescription(bool active)
+    {
+        skillDescrption.SetActive(active);
+    }
+
+    public void updateActiveSkillDescription(int which)
+    {
+        skillDescrption.GetComponent<UISkillDescription>().set(mainCharacter, which);
+
     }
 }
