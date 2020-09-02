@@ -41,7 +41,7 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
     public delegate void DamageChange(float value);
     public DamageChange dmg;
 
-    [HideInInspector] public bool life=true;
+    [HideInInspector] public bool alive=true;
 
     protected float attackTime=0;
 
@@ -70,8 +70,6 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
 
     // effect list?
 
-    
-
     void Start()
     {
         myCHC = GetComponent<CharacterController>();
@@ -87,12 +85,12 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
 
         if(target !=null && Vector3.Distance(transform.position, target.GetComponent<Transform>().position) < stats.attackRange) // leave it for now
         {
-            if (!target.life)
+            if (!target.alive)
                 target = null;
-            //else
-                //tryAttack();
+            else
+                attack(0);
 
-            if (target != null && target.life)
+            if (target != null && target.alive)
             {
                 Vector3 offset = (target.transform.position - this.transform.position).normalized;
                 Quaternion q = Quaternion.LookRotation(offset, Vector3.up);
@@ -103,17 +101,23 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
         }
 
         lvlLook.lookAt();
-        callInUpdate();
+
+        if (experience > needExperience)
+        {
+            level++;
+            experience -= needExperience;
+            stats += scalingPerLevelStats;
+        }
     }
 
-    public virtual void attack(int i) // delete raycasthit
+    public virtual void attack(int i)
     {
-        attacks[i].use();
+        attacks[i].execute();
     }
 
-    public virtual void GetDamage(HitInfo hi) // looks ugly XD
+    public virtual void GetDamage(HitInfo hi)
     {
-        if (life)
+        if (alive)
         {
             float damage = calculateRealDamage(hi);
             stats.healthPoints -= damage;
@@ -125,10 +129,24 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
         }
     }
 
-    protected virtual float calculateRealDamage(HitInfo hi) // same like higher
+    protected virtual float calculateRealDamage(HitInfo hi)
     {
-
-        return 0f;
+        float damage=0;
+        switch(hi.damageType)
+        {
+            case DamageType.magicDamage:
+                damage = hi.damage -= stats.physicsResist;
+                break;
+            case DamageType.physicDamage:
+                damage = hi.damage - stats.magicResist;
+                break;
+            case DamageType.trueDamage:
+                damage =  hi.damage;
+                break;
+        }
+        if (damage < 0)
+            damage = 0;
+        return damage;
     }
 
     public virtual void GetHeal(float i)
@@ -139,19 +157,7 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
     }
     #endregion
 
-    // function is updating everything what is the same for all classes
-    // like level, attack hit, heals
-    protected void callInUpdate()
-    {
-        if(experience > needExperience)
-        {
-            level++;
-            experience -= needExperience;
-            stats += scalingPerLevelStats;
-        }
-    }
-
-    public void addExp(float exp) // don't check lvl
+    public void addExp(float exp)
     {
         experience += exp;
     }
@@ -160,15 +166,17 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
     {
         if (stats.healthPoints > 0)
             return false;
-        life = false;
+        alive = false;
         stats.healthPoints = 0;
         this.GetComponent<CharacterController>().kill();
         Destroy(this.gameObject, 1.5f);
         return true;
     }
 
-    public void setTarget(Transform t) // kk
+    public void setTarget(Transform t)
     {
+        if (t == this.transform)
+            return;
         myCHC.setTarget(t, stats.attackRange);
         target = t.GetComponent<CharacterClass>();
     }
@@ -179,6 +187,10 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
         myCHC.removeTarget();
     }
 
+    public CharacterClass getTarget()
+    {
+        return target;
+    }
 
     private void OnDrawGizmosSelected() // draw a attack range
     {

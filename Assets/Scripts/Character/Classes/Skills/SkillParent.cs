@@ -59,8 +59,6 @@ public enum DamageType
 
 public abstract class SkillParent : MonoBehaviour
 {
-    public TextMeshProUGUI damageTable;
-
     public Sprite icon;
     public string skillName;
     public string descritpion;
@@ -68,18 +66,24 @@ public abstract class SkillParent : MonoBehaviour
     [HideInInspector] public float cooldown = 0f; // if 0 skill is possible to use
     [SerializeField] SkillModifier[] skillModifier; // skills modifier everything will modify skill damage/heal by stats
     [SerializeField] Cost[] cost = new Cost[2]; // skills cost, possible is healt or mana
-    public DamageType damageType; // Means 200% AP can make Physic damage, or maybe tru? ;D
+    public DamageType damageType; // Means 200% AP can make Physic damage, or true damage
 
     [HideInInspector] public string damageDescriptionForUI = "";
 
     protected CharacterClass skillOwner;
     protected CharacterController controllerOwner;
-    abstract public void use();
+    abstract public void execute();
 
     private void Start()
     {
         skillOwner = this.gameObject.GetComponent<CharacterClass>();
         controllerOwner = this.gameObject.GetComponent<CharacterController>();
+    }
+
+    private void Update()
+    {
+        if (cooldown > 0)
+            cooldown -= Time.deltaTime;
     }
 
     // for futhure if i would need instant reset skill
@@ -181,7 +185,6 @@ public abstract class SkillParent : MonoBehaviour
             }
             damageDescriptionForUI += " ";
         }
-        damageTable.text = damageDescriptionForUI;
         return damage;
     }
 

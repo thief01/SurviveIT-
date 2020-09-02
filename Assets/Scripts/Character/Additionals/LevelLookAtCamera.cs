@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class LevelLookAtCamera : MonoBehaviour
 {
-    void Update()
-    {
-        
-    }
-
     public void lookAt()
     {
         Vector3 distanse = (this.transform.position - Camera.main.transform.position).normalized;

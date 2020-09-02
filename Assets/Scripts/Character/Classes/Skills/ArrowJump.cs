@@ -33,7 +33,7 @@ public class ArrowJump : SkillParent
     float actualyDashDistance = 0f;
     Vector3 direction;
 
-    public override void use()
+    public override void execute()
     {
         if(cooldown > 0)
         {

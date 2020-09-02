@@ -8,10 +8,10 @@ public class HitInfo
     public DamageType damageType;
     public CharacterClass owner;
 
-    public HitInfo(float dmg,DamageType dmgT, CharacterClass own)
+    public HitInfo(CharacterClass owner, float damage, DamageType dt)
     {
-        damage = dmg;
-        damageType = dmgT;
-        owner = own;
+        this.damage = damage;
+        this.owner = owner;
+        damageType = dt;
     }
 }

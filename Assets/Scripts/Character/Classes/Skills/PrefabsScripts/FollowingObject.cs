@@ -12,15 +12,19 @@ public class FollowingObject : MonoBehaviour
 
     private void Update()
     {
-        if(Vector3.Distance(this.transform.position, target.transform.position) < range)
+        if (target == null || !target.alive)
+            Destroy(this.gameObject);
+        
+        if(Vector3.Distance(this.transform.position, target.transform.position + Vector3.up * 0.5f) < range)
         {
             hit();
+            Destroy(this.gameObject);
         }
-        Vector3 direction = (target.transform.position - this.transform.position).normalized;
+        Vector3 direction = (target.transform.position - this.transform.position + Vector3.up * 0.5f).normalized;
 
         Quaternion q = Quaternion.LookRotation(direction);
         this.transform.rotation = q;
-        this.transform.position = Vector3.MoveTowards(this.transform.position, target.transform.position, speed);
+        this.transform.position = Vector3.MoveTowards(this.transform.position, target.transform.position+Vector3.up*0.5f, speed*Time.deltaTime);
     }
 
     private void OnDrawGizmosSelected()

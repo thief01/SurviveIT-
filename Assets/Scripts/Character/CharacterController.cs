@@ -116,6 +116,9 @@ public class CharacterController : MonoBehaviour
             case AnimationValue.pickup:
                 anim.Play("pickup");
                 break;
+            case AnimationValue.attack0:
+                anim.Play("Attack0");
+                break;
         }
     }
 }

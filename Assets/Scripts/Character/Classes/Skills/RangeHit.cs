@@ -5,20 +5,30 @@ using UnityEngine;
 public class RangeHit : SkillParent
 {
     public GameObject hitPrefab;
-    // Start is called before the first frame update
-    void Start()
+    public Transform respawnPosition;
+
+    private void Update()
     {
-        
+        cooldownTime -= Time.deltaTime;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void execute()
     {
+        if (cooldownTime > 0)
+            return; 
         
+        cooldownTime = 1 / skillOwner.stats.attackSpeed;
+        controllerOwner.playAnimation(AnimationValue.attack0 , skillOwner.stats.attackSpeed);
+        Invoke("respawn", 0.3f/skillOwner.stats.attackSpeed);
     }
 
-    public override void use()
+    void respawn()
     {
-        // respawn arrow or magic ball
+        GameObject g = Instantiate(hitPrefab);
+        g.transform.position = respawnPosition.position;
+        FollowingObject fg = g.GetComponent<FollowingObject>();
+        fg.target = skillOwner.getTarget();
+        HitInfo hi = new HitInfo(skillOwner, calculateDamage(), damageType);
+        fg.hi = hi;
     }
 }
