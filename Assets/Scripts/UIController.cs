@@ -44,8 +44,8 @@ public class UIController : MonoBehaviour
         barSlots[1].bar.fillAmount =  mainCharacter.stats.manaPoints / mainCharacter.stats.manaPointsMAX;
         barSlots[2].bar.fillAmount = mainCharacter.experience / mainCharacter.needExperience;
 
-        barSlots[0].value.text = mainCharacter.stats.healthPoints + " / " + mainCharacter.stats.healthPointsMAX;
-        barSlots[1].value.text = mainCharacter.stats.manaPoints + " / " + mainCharacter.stats.manaPointsMAX;
+        barSlots[0].value.text = (int)mainCharacter.stats.healthPoints + " / " + (int)mainCharacter.stats.healthPointsMAX;
+        barSlots[1].value.text = (int)mainCharacter.stats.manaPoints + " / " + (int)mainCharacter.stats.manaPointsMAX;
         barSlots[2].value.text = (mainCharacter.experience / mainCharacter.needExperience * 100f).ToString() + " %";
 
         
