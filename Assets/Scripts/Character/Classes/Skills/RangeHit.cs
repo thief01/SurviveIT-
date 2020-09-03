@@ -7,11 +7,6 @@ public class RangeHit : SkillParent
     public GameObject hitPrefab;
     public Transform respawnPosition;
 
-    private void Update()
-    {
-        cooldownTime -= Time.deltaTime;
-    }
-
     public override void execute()
     {
         if (cooldownTime > 0)

@@ -55,7 +55,6 @@ public class ArrowJump : SkillParent
             Debug.Log("Bad ray");
             return;
         }
-        calculateDamage();
         cooldown = cooldownTime;
         direction = (rh.point - this.transform.position).normalized;
         direction.y = 0;

@@ -36,7 +36,7 @@ public class FlyingToFront : MonoBehaviour
     {
         this.transform.Translate(Vector3.left * speed * Time.deltaTime);
 
-        Collider[] colliders = Physics.OverlapBox(this.transform.position, hitBox,this.transform.rotation);
+        Collider[] colliders = Physics.OverlapBox(this.transform.position, Vector3.Scale(hitBox,this.transform.localScale),this.transform.rotation);
            
         foreach(Collider c in colliders)
         {
