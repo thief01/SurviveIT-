@@ -40,11 +40,11 @@ public class ArrowJump : SkillParent
             return;
         }
 
-        /*if (!takeResource())
+        if (!takeResource())
         {
             Debug.Log("Not enough resource.");
             return;
-        }*/
+        }
 
 
         Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -64,21 +64,14 @@ public class ArrowJump : SkillParent
         actualyDashDistance = 0f;
         dashIsActive = true;
 
-        /*GameObject g = Instantiate(arrow);
+        GameObject g = Instantiate(arrow);
         g.transform.position = this.transform.position;
-        g.transform.rotation = this.transform.rotation;
+        g.transform.rotation = this.transform.rotation* Quaternion.Euler(0,90,0);
+        FlyingToFront ftf = g.GetComponent<FlyingToFront>();
+        ftf.hi = new HitInfo(skillOwner, calculateDamage(), damageType);
 
-
-        // chc.playAnimation(dash);
-        // respawn arrow
-        throw new System.NotImplementedException();*/
         controllerOwner.removeTarget();
     }
-
-    /*float calculateDamage()
-    {
-        return 0f;
-    }*/
 
     private void OnDrawGizmosSelected()
     {

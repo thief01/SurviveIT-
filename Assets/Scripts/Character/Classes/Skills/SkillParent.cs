@@ -94,43 +94,46 @@ public abstract class SkillParent : MonoBehaviour
 
     protected virtual bool takeResource()
     {
+        float substractHP = 0;
+        float substractMP = 0;
         foreach(Cost c in cost)
         {
             if(c.costType == CostType.healthPoint)
             {
                 if(c.typeValue == TypeValue.percent)
                 {
-                    skillOwner.stats.healthPoints -= skillOwner.stats.healthPointsMAX * c.value/100f;
+                    substractHP = skillOwner.stats.healthPointsMAX * c.value;
                 }
                 else if(c.typeValue == TypeValue._const)
                 {
-                    skillOwner.stats.healthPoints -= c.value;
+                    substractHP = c.value;
                 }
 
                 if(skillOwner.stats.healthPoints < 10f)
                 {
+                    substractHP = skillOwner.stats.healthPoints - 10;
                     skillOwner.stats.healthPoints = 10f;
                 }
             }
             if(c.costType == CostType.manaPoint)
             {
-                float valueToGet = 0f;
                 if (c.typeValue == TypeValue.percent)
                 {
-                    valueToGet = skillOwner.stats.manaPointsMAX * c.value/100f;
+                    substractMP = skillOwner.stats.manaPointsMAX * c.value;
                 }
                 else if (c.typeValue == TypeValue._const)
                 {
-                    valueToGet = c.value;
+                    substractMP = c.value;
                 }
 
-                if(skillOwner.stats.manaPoints < valueToGet)
+                if(skillOwner.stats.manaPoints < substractMP)
                 {
                     return false;
                 }
-                skillOwner.stats.manaPoints -= valueToGet;
             }
         }
+        skillOwner.stats.manaPoints -= substractMP;
+        skillOwner.stats.healthPoints -= substractHP;
         return true;
     }
 

@@ -5414,7 +5414,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400046, guid: 56be6f148bc409e4eb1a8144361f9fcd, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 400046, guid: 56be6f148bc409e4eb1a8144361f9fcd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -14263,7 +14263,7 @@ MonoBehaviour:
   cooldown: 0
   skillModifier:
   - statistic: 0
-    value: 100
+    value: 7000
   - statistic: 1
     value: 1
   - statistic: 2
@@ -14277,9 +14277,9 @@ MonoBehaviour:
     value: 0.5
   damageType: 0
   damageDescriptionForUI: 
-  maxDashRange: 6
+  maxDashRange: 4
   dashSpeed: 35
-  arrow: {fileID: 0}
+  arrow: {fileID: 3474173744667478311, guid: 68eaca6b78aac7543b0ee22361d27b3b, type: 3}
 --- !u!114 &1922865228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16012,7 +16012,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2066668864
 PrefabInstance:

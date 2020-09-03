@@ -9,29 +9,40 @@ public class FlyingToFront : MonoBehaviour
     public bool activeOnFirst=false;
     [HideInInspector] public HitInfo hi;
 
+    public float lifeTime = 1f;
+
+    List<Transform> hited;
+
     public virtual void cast(Collider[] colliders)
     {
-
+        
+        foreach (Collider c in colliders)
+        {
+            CharacterClass cc = c.GetComponent<CharacterClass>();
+            if(cc != null && cc != hi.owner)
+                cc.GetDamage(hi);
+        }
+        Destroy(this.gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        this.transform.Translate(Vector3.left * speed * Time.deltaTime);
 
-        Collider[] colliders = Physics.OverlapBox(this.transform.position, hitBox);
+        Collider[] colliders = Physics.OverlapBox(this.transform.position, hitBox,this.transform.rotation);
         if (activeOnFirst)
         {
             if (colliders != null)
             {
-                CharacterClass cc = colliders[0].gameObject.GetComponent<CharacterClass>();
-                cc.GetDamage(hi);
+                cast(new Collider[] { colliders[0] });
             }
         }
-        else
+        if(lifeTime<0)
         {
-
+            cast(colliders);
         }
+        lifeTime -= Time.deltaTime;
     }
 
     public void OnDrawGizmosSelected()
