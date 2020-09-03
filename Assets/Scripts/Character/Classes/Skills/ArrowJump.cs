@@ -58,7 +58,9 @@ public class ArrowJump : SkillParent
         calculateDamage();
         cooldown = cooldownTime;
         direction = (rh.point - this.transform.position).normalized;
+        direction.y = 0;
         this.transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+        
         direction *= -1;
 
         actualyDashDistance = 0f;
@@ -66,7 +68,7 @@ public class ArrowJump : SkillParent
 
         GameObject g = Instantiate(arrow);
         g.transform.position = this.transform.position;
-        g.transform.rotation = this.transform.rotation* Quaternion.Euler(0,90,0);
+        g.transform.rotation = Quaternion.LookRotation(direction, Vector3.up) *Quaternion.Euler(0,-90,0);
         FlyingToFront ftf = g.GetComponent<FlyingToFront>();
         ftf.hi = new HitInfo(skillOwner, calculateDamage(), damageType);
 

@@ -16,6 +16,11 @@ public class FlyingToFront : MonoBehaviour
 
     public virtual void cast(Collider collider)
     {
+        if(damageRange==0)
+        {
+            collider.GetComponent<CharacterClass>().GetDamage(hi);
+        }
+
         Collider[] colliders = Physics.OverlapSphere(collider.transform.position, damageRange);
         foreach(Collider c in colliders)
         {
@@ -31,7 +36,7 @@ public class FlyingToFront : MonoBehaviour
     {
         this.transform.Translate(Vector3.left * speed * Time.deltaTime);
 
-        Collider[] colliders = Physics.OverlapBox(this.transform.position, hitBox,this.transform.rotation);
+        /*Collider[] colliders = Physics.OverlapBox(this.transform.position, hitBox,this.transform.rotation);
            
         if(colliders != null)
         {
@@ -39,7 +44,7 @@ public class FlyingToFront : MonoBehaviour
             {
                 cast(colliders[0]);
             }
-        }
+        }*/
         if (lifeTime < 0)
         {
             Destroy(this.gameObject);
