@@ -94,5 +94,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   hitBox: {x: 1.8, y: 0.6, z: 1}
-  activeOnFirst: 0
   lifeTime: 0.4
+  damageRange: 1.5

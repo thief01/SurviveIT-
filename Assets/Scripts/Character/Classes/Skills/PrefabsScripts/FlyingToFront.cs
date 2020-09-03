@@ -1,22 +1,23 @@
-﻿using System.Collections;
+﻿using System.CodeDom;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class FlyingToFront : MonoBehaviour
 {
     public float speed;
     public Vector3 hitBox;
-    public bool activeOnFirst=false;
     [HideInInspector] public HitInfo hi;
 
     public float lifeTime = 1f;
 
-    List<Transform> hited;
+    public float damageRange=5f;
 
-    public virtual void cast(Collider[] colliders)
+    public virtual void cast(Collider collider)
     {
-        
-        foreach (Collider c in colliders)
+        Collider[] colliders = Physics.OverlapSphere(collider.transform.position, damageRange);
+        foreach(Collider c in colliders)
         {
             CharacterClass cc = c.GetComponent<CharacterClass>();
             if(cc != null && cc != hi.owner)
@@ -31,23 +32,32 @@ public class FlyingToFront : MonoBehaviour
         this.transform.Translate(Vector3.left * speed * Time.deltaTime);
 
         Collider[] colliders = Physics.OverlapBox(this.transform.position, hitBox,this.transform.rotation);
-        if (activeOnFirst)
+           
+        if(colliders != null)
         {
-            if (colliders != null)
+            if (colliders[0].GetComponent<CharacterClass>() != null && colliders[0].transform != hi.owner.transform)
             {
-                cast(new Collider[] { colliders[0] });
+                cast(colliders[0]);
             }
         }
-        if(lifeTime<0)
+        if (lifeTime < 0)
         {
-            cast(colliders);
+            Destroy(this.gameObject);
         }
         lifeTime -= Time.deltaTime;
     }
 
     public void OnDrawGizmosSelected()
     {
+        Gizmos.matrix = this.transform.localToWorldMatrix;
         Gizmos.color = new Color(255, 0, 0);
-        Gizmos.DrawWireCube(this.transform.position, hitBox);
+        Gizmos.DrawWireCube(Vector3.zero, hitBox);
+
+        Gizmos.matrix = Matrix4x4.identity;
+        foreach(CharacterClass cc in FindObjectsOfType<CharacterClass>())
+        {
+            Gizmos.color = new Color(255, 255, 0);
+            Gizmos.DrawWireSphere(cc.transform.position, damageRange);
+        }
     }
 }
