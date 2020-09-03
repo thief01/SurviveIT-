@@ -36,15 +36,15 @@ public class FlyingToFront : MonoBehaviour
     {
         this.transform.Translate(Vector3.left * speed * Time.deltaTime);
 
-        /*Collider[] colliders = Physics.OverlapBox(this.transform.position, hitBox,this.transform.rotation);
+        Collider[] colliders = Physics.OverlapBox(this.transform.position, hitBox,this.transform.rotation);
            
-        if(colliders != null)
+        foreach(Collider c in colliders)
         {
-            if (colliders[0].GetComponent<CharacterClass>() != null && colliders[0].transform != hi.owner.transform)
+            if(c.GetComponent<CharacterClass>() != null && c.transform != hi.owner.transform)
             {
-                cast(colliders[0]);
+                cast(c);
             }
-        }*/
+        }
         if (lifeTime < 0)
         {
             Destroy(this.gameObject);
