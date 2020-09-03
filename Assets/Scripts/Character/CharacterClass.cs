@@ -28,10 +28,17 @@ public class Stats
         Stats temp = new Stats();
         temp.healthPointsMAX = a.healthPointsMAX + b.healthPointsMAX;
         temp.manaPointsMAX = a.manaPointsMAX + b.manaPointsMAX;
+        temp.healthRegen = a.healthRegen + b.healthRegen;
+        temp.manaRegen = a.manaRegen + b.manaRegen;
         temp.attackDamage = a.attackDamage + b.attackDamage;
         temp.attackPower = a.attackPower + b.attackPower;
         temp.magicResist = a.magicResist + b.magicResist;
         temp.physicsResist = a.physicsResist + b.physicsResist;
+
+        temp.healthPoints = temp.healthPointsMAX;
+        temp.manaPoints = temp.manaPointsMAX;
+
+        temp.attackRange = a.attackRange+b.attackRange;
         return temp;
     }
 }
@@ -52,23 +59,14 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
 
     public float experience;
     public float needExperience;
-    public int level;
+    public int level=1;
+    public float movementSpeed;
 
     protected CharacterClass target;
 
     private CharacterController myCHC;
 
-    /* attacks list
-     * 0 - basic hit
-     * 1 - some boost
-     * 2 - dash
-     * 3 - some skill
-     * 4 - ulti
-     */
-
     public SkillParent[] attacks = new SkillParent[5];
-
-    // effect list?
 
     void Start()
     {
@@ -124,7 +122,7 @@ public class CharacterClass : MonoBehaviour, IDamageable, IKillable
             dmg.Invoke(damage);
             if(Kill())
             {
-                hi.owner.addExp(100 * level);
+                hi.owner.addExp(100 * level / hi.owner.level);
             }
         }
     }
