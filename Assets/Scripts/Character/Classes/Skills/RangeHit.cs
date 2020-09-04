@@ -9,10 +9,10 @@ public class RangeHit : SkillParent
 
     public override void execute()
     {
-        if (cooldownTime > 0)
+        if (cooldown > 0)
             return; 
         
-        cooldownTime = 1 / skillOwner.stats.attackSpeed;
+        cooldown = 1 / skillOwner.stats.attackSpeed;
         controllerOwner.playAnimation(AnimationValue.attack0 , skillOwner.stats.attackSpeed);
         Invoke("respawn", 0.3f/skillOwner.stats.attackSpeed);
     }

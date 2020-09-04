@@ -23920,7 +23920,7 @@ MonoBehaviour:
   - {fileID: 1922865228}
   - {fileID: 1922865227}
   - {fileID: 1922865229}
-  - {fileID: 1922865227}
+  - {fileID: 1922865231}
   - {fileID: 1922865227}
   lvlLook: {fileID: 0}
 --- !u!114 &1922865224
@@ -23968,7 +23968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d819f075a12817f43a5177b96e799bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: dc148f9c15576d9499ca1b6e89e41f82, type: 3}
+  icon: {fileID: 21300000, guid: 0ec9501cad82c4642b61c663010393f4, type: 3}
   skillName: The best way to escape from your home!
   descritpion: It will throw you out the window xD
   cooldownTime: 3
@@ -24024,7 +24024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b7ccdce74f52c4d9970cd346231d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: cfb37d3a55591aa4da29b279ae9fac7b, type: 3}
   skillName: Best way to destroy anyting.
   descritpion: It will destroy your TV, PC, and window.
   cooldownTime: 1
@@ -24040,6 +24040,33 @@ MonoBehaviour:
     type: 3}
   arrows: 10
   angle: 45
+--- !u!114 &1922865231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922865219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f0b44c62997e6a449a49f582d7315ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 316c61270e7664c478d0e893c35bb460, type: 3}
+  skillName: Ratatatatata!
+  descritpion: 
+  cooldownTime: 5
+  cooldown: 0
+  skillModifier:
+  - statistic: 0
+    value: 500
+  cost: []
+  damageType: 0
+  damageDescriptionForUI: 
+  arrow: {fileID: 1907024977833413118, guid: 254649a9a122b2241a6dda53b63ef029, type: 3}
+  respawnPosition: {fileID: 656149728}
+  arrows: 10
+  breakBetweenShots: 0.5
 --- !u!1001 &1923874320
 PrefabInstance:
   m_ObjectHideFlags: 0
